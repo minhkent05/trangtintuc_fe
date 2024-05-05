@@ -1,0 +1,22 @@
+h5{
+    font-weight: 700;
+}
+
+.search-user {
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 20px 
+}
+
+.search-user input{
+   border: none;
+   outline: none;
+}
+
+.search-user input::placeholder{
+   color: #ccc;
+ }
+
+ i {
+    cursor: pointer;
+ }

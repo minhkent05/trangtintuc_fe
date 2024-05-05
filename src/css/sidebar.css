@@ -1,0 +1,11 @@
+.headerdash {
+    height: 50px;
+    background-color: #5fa9b3 ;
+    display: flex;
+    justify-content: space-between;
+}
+
+.headerdash img {
+    height: 100%;
+    margin-left: 20px;
+}

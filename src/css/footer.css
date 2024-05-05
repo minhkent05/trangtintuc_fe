@@ -1,0 +1,60 @@
+.title_footer {
+    background-color: #5fa9b3;
+    display: flex;
+    padding: 15px;
+  }
+  
+  .logo_footer {
+    height: 50px;
+    text-align: start;
+  }
+  
+  .logo_footer img {
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* .contact {
+    height: 250px;
+  } */
+  
+  .icon {
+    font-size: 25px;
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .contact {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .map iframe {
+    border-radius: 10px;
+    overflow: hidden;
+    width: 80%;
+    height: 80%;
+    padding-right: 20px;
+  }
+  
+  .lienhe {
+    padding-left: 30px;
+  }
+
+  .Copyright {
+    background-color: #ccc;
+    color: #ebe9e9;
+  }
+
+  /* ----------------mobile--------------- */
+
+  @media only screen and (max-width: 750px) { 
+
+    .logo_footer {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+  }
