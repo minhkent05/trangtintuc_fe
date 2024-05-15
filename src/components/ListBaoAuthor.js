@@ -1,12 +1,10 @@
+import React,{useEffect,useState} from 'react';
 import axios from 'axios';
-import '../css/listbao.css'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import React, { useEffect, useState } from 'react';
-import ReactPaginate from 'react-paginate';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
+import ReactPaginate from 'react-paginate';
 
-function ListBao(props) {
+function ListBaoAuthor(props) {
     const [loading, setLoading] = useState(true)
     const [showModal, setShowModal] = useState(false);
     const [idToDelete, setIdToDelete] = useState(null);
@@ -14,9 +12,10 @@ function ListBao(props) {
     const [search, setSeacrh] = useState('')
     const [totalPage, setTotalPage] = useState(0)
     const [pageNumber, setPageNumber] = useState(0)
+    const user_id = localStorage.getItem('userID')
 
     const loadData = async () => {
-        const res = await axios.get(`http://localhost:9191/listBaoPaging?search=${search}&pageNumber=${pageNumber}&pageSize=5`)
+        const res = await axios.get(`http://localhost:9191/listBaibaoAuthor?id=${user_id}&search=${search}&pageNumber=${pageNumber}&pageSize=5`)
         setListBao(res.data.content)
         setTotalPage(res.data.totalPages)
     }
@@ -94,8 +93,7 @@ function ListBao(props) {
                                 {showModal === true && (
                                     <div className='modal-delete bg-white'>
                                         <div className='title-modal mb-4'>
-                                            <h5>Xóa bài bào</h5>
-                                            <p>Bạn có chắc chắn muốn xóa bài báo</p>
+                                            <h5>Bạn có chắc chắn muốn xóa bài báo</h5>
                                         </div>
                                         <div className='d-flex justify-content-around '>
                                             <button className='btn btn-outline-secondary' onClick={handleCloseModal}>Đóng</button>
@@ -142,4 +140,4 @@ function ListBao(props) {
     );
 }
 
-export default ListBao;
+export default ListBaoAuthor;

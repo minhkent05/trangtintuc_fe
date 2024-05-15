@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import '../css/detailbao.css'
 
 function DetailBao(props) {
+    const [loading, setLoading] = useState(true)
     const [listBao, setListBao] = useState([])
     const [onePost, setOnePost] = useState([])
     const [listBaoNB, setListBaoNB] = useState([])
@@ -12,6 +13,9 @@ function DetailBao(props) {
     useEffect(() => {
         loadData()
         loadDataNoiBat()
+        setTimeout(() => {
+            setLoading(false)
+        }, 2000)
     }, [])
 
     const loadData = async () => {
@@ -27,7 +31,7 @@ function DetailBao(props) {
         setListBaoNB(sliceData)
     }
     return (
-        <div>
+        <div className='container'>
             <div className="row mt-5 p-4 me-0 ms-0">
                 <div className="col-md-7 image-container box-content-detail me-0 ms-0">
                     {
@@ -104,8 +108,13 @@ function DetailBao(props) {
                     ))
 
                 }
-
             </div>
+
+            {loading === true && (
+                <div className="loaderbox">
+                    <span className="loader"></span>
+                </div>
+            )}
         </div>
     );
 }

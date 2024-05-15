@@ -7,11 +7,18 @@ function Content(props) {
     const [onePost, setOnePost] = useState([])
     const [listBongda, setListBongda] = useState([])
     const [listTinTuc, setListTinTuc] = useState([])
+    const [listKinhDoanh, setListKinhDoanh] = useState([])
+    const [listGiaiTri, setListGiaiTri] = useState([])
+    const [listTheGioi, setListTheGioi] = useState([])
+
     useEffect(() => {
         loadData()
         loadOneData()
         loadDataBongDa()
         loadDataTinTuc()
+        loadDataKinhDoanh()
+        loadDataGiaiTri()
+        loadDataTheGioi()
         setTimeout(() => {
             setLoading(false)
         }, 2000)
@@ -44,137 +51,266 @@ function Content(props) {
         setListTinTuc(sliceData)
     }
 
+    const loadDataKinhDoanh = async () => {
+        const res = await axios.get("http://localhost:9191/listTheLoai?theloai=kinh doanh")
+        const sliceData = res.data.slice(0, 6)
+        setListKinhDoanh(sliceData)
+    }
+
+    const loadDataGiaiTri = async () => {
+        const res = await axios.get("http://localhost:9191/listTheLoai?theloai=giải trí")
+        const sliceData = res.data.slice(0, 6)
+        setListGiaiTri(sliceData)
+    }
+
+    const loadDataTheGioi = async () => {
+        const res = await axios.get("http://localhost:9191/listTheLoai?theloai=thế giới")
+        const sliceData = res.data.slice(0, 6)
+        setListTheGioi(sliceData)
+    }
+
+
 
     return (
-        <div className="row mt-5 p-4 me-0 ms-0">
-            {
-                onePost.map((item, index) => (
-                    <a key={index} href={`/Detail/${item.id}`} className="col-md-7 image-container box-content">
-                        {item.anh && (
-                            <img src={`data:image/jpeg;base64,${item.anh}`} className="img-fluid rounded-start" alt="..." />
-                        )}
-                        <div className="content text-start pt-2">
-                            <h3><b>{item.tenbaibao}</b></h3>
-                            <p><i>Tác giả: {item.tacgia}<br />
-                                Ngày đăng: {item.ngaydang}</i>
-                            </p>
-                        </div>
-                    </a>
-
-                ))
-            }
-
-            <div className="col-md-5 category " >
+        <div className='container'>
+            <div className=" row mt-5 pt-4">
                 {
-                    listBao.map((item, index) => (
-                        <a key={index} href={`/Detail/${item.id}`} className="row g-0 mb-2 pb-2 border-bottom ">
-                            <div className="col-md-5">
-                                {item.anh && (
-                                    <img src={`data:image/jpeg;base64,${item.anh}`} className="img-fluid rounded-start" alt="..." />
-                                )}
-                            </div>
-                            <div className="col-md-7">
-                                <div className="card-body p-0 ps-2 text-start">
-                                    <div>
-                                        <h5>{item.tenbaibao}</h5>
-                                    </div>
-                                    <div className='d-flex justify-content-between'>
-                                        <p>
-                                            <i>Tác giả: {item.tacgia}
-                                                <br />
-                                                {item.ngaydang}</i>
-                                        </p>
-                                        <p>
-                                            <i class="bi bi-eye"></i> {item.luotxem}
-                                        </p>
-                                    </div>
-                                    {/* <p dangerouslySetInnerHTML={{ __html: item.description }} /> */}
-                                </div>
+                    onePost.map((item, index) => (
+                        <a key={index} href={`/Detail/${item.id}`} className="col-md-7 image-container box-content">
+                            {item.anh && (
+                                <img src={`data:image/jpeg;base64,${item.anh}`} className="img-fluid rounded-start" alt="..." />
+                            )}
+                            <div className="content text-start pt-2">
+                                <h3><b>{item.tenbaibao}</b></h3>
+                                <p><i>Tác giả: {item.tacgia}<br />
+                                    Ngày đăng: {item.ngaydang}</i>
+                                </p>
                             </div>
                         </a>
+
                     ))
                 }
 
-            </div>
-            <div>
-                <div className='d-flex title-content'>
-                    <h3 className='ps-4 pe-3'><b>Tin tức</b></h3>  <hr className='w-50' style={{ height: '5px', color: 'red', opacity: '0.6' }}></hr>
-                </div>
-                <div className="row row-cols-1 row-cols-md-3 g-4 pb-3">
+                <div className="col-md-5 category" >
                     {
-                        listTinTuc.map((item, index) => (
-                            <a key={index} href={`/Detail/${item.id}`} className="col">
-                                <div className="card h-100">
+                        listBao.map((item, index) => (
+                            <a key={index} href={`/Detail/${item.id}`} className="row g-0 mb-2 pb-2 border-bottom ">
+                                <div className="col-md-5">
                                     {item.anh && (
-                                        <img className="card-img-top" src={`data:image/jpeg;base64,${item.anh}`} />
+                                        <img src={`data:image/jpeg;base64,${item.anh}`} className="img-fluid rounded-start" alt="..." />
                                     )}
-
-                                    <div className="card-body text-start">
+                                </div>
+                                <div className="col-md-7">
+                                    <div className="card-body p-0 ps-2 text-start">
                                         <div>
-                                            <h5 className="card-text">{item.tenbaibao}</h5>
+                                            <h5>{item.tenbaibao}</h5>
                                         </div>
                                         <div className='d-flex justify-content-between'>
                                             <p>
-                                                <i>
-                                                    Tác giả: {item.tacgia}
+                                                <i>Tác giả: {item.tacgia}
                                                     <br />
-                                                    {item.ngaydang}
-                                                </i>
+                                                    {item.ngaydang}</i>
                                             </p>
                                             <p>
                                                 <i class="bi bi-eye"></i> {item.luotxem}
                                             </p>
                                         </div>
+                                        {/* <p dangerouslySetInnerHTML={{ __html: item.description }} /> */}
                                     </div>
                                 </div>
                             </a>
                         ))
-
                     }
 
                 </div>
-                <div className='d-flex title-content'>
-                    <h3 className='ps-4 pe-3'><b>Thể thao</b></h3>  <hr className='w-50' style={{ height: '5px', color: 'red', opacity: '0.6' }}></hr>
-                </div>
-                <div className="row row-cols-1 row-cols-md-3 g-4 pb-3">
-                    {
-                        listBongda.map((item, index) => (
-                            <a key={index} href={`/Detail/${item.id}`} className="col">
-                                <div className="card h-100">
-                                    {item.anh && (
-                                        <img className="card-img-top" src={`data:image/jpeg;base64,${item.anh}`} />
-                                    )}
+                <div>
+                    <div className='d-flex title-content'>
+                        <h3 className='ps-4 pe-3'><b>Tin tức</b></h3>  <hr className='w-50' style={{ height: '5px', color: 'red', opacity: '0.6' }}></hr>
+                    </div>
+                    <div className="row row-cols-1 row-cols-md-3 g-4 pb-3">
+                        {
+                            listTinTuc.map((item, index) => (
+                                <a key={index} href={`/Detail/${item.id}`} className="col">
+                                    <div className="card h-100">
+                                        {item.anh && (
+                                            <img className="card-img-top" src={`data:image/jpeg;base64,${item.anh}`} />
+                                        )}
 
-                                    <div className="card-body text-start">
-                                        <div>
-                                            <h5 className="card-text">{item.tenbaibao}</h5>
-                                        </div>
-                                        <div className='d-flex justify-content-between'>
-                                            <p>
-                                                <i>
-                                                    Tác giả: {item.tacgia}
-                                                    <br />
-                                                    {item.ngaydang}
-                                                </i>
-                                            </p>
-                                            <p>
-                                                <i class="bi bi-eye"></i> {item.luotxem}
-                                            </p>
+                                        <div className="card-body text-start">
+                                            <div>
+                                                <h5 className="card-text">{item.tenbaibao}</h5>
+                                            </div>
+                                            <div className='d-flex justify-content-between'>
+                                                <p>
+                                                    <i>
+                                                        Tác giả: {item.tacgia}
+                                                        <br />
+                                                        {item.ngaydang}
+                                                    </i>
+                                                </p>
+                                                <p>
+                                                    <i class="bi bi-eye"></i> {item.luotxem}
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </a>
-                        ))
+                                </a>
+                            ))
 
-                    }
+                        }
 
+                    </div>
+                    <div className='d-flex title-content'>
+                        <h3 className='ps-4 pe-3'><b>Thể thao</b></h3>  <hr className='w-50' style={{ height: '5px', color: 'red', opacity: '0.6' }}></hr>
+                    </div>
+                    <div className="row row-cols-1 row-cols-md-3 g-4 pb-3">
+                        {
+                            listBongda.map((item, index) => (
+                                <a key={index} href={`/Detail/${item.id}`} className="col">
+                                    <div className="card h-100">
+                                        {item.anh && (
+                                            <img className="card-img-top" src={`data:image/jpeg;base64,${item.anh}`} />
+                                        )}
+
+                                        <div className="card-body text-start">
+                                            <div>
+                                                <h5 className="card-text">{item.tenbaibao}</h5>
+                                            </div>
+                                            <div className='d-flex justify-content-between'>
+                                                <p>
+                                                    <i>
+                                                        Tác giả: {item.tacgia}
+                                                        <br />
+                                                        {item.ngaydang}
+                                                    </i>
+                                                </p>
+                                                <p>
+                                                    <i class="bi bi-eye"></i> {item.luotxem}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            ))
+
+                        }
+
+                    </div>
+                    <div className='d-flex title-content'>
+                        <h3 className='ps-4 pe-3'><b>Kinh doanh</b></h3>  <hr className='w-50' style={{ height: '5px', color: 'red', opacity: '0.6' }}></hr>
+                    </div>
+                    <div className="row row-cols-1 row-cols-md-3 g-4 pb-3">
+                        {
+                            listKinhDoanh.map((item, index) => (
+                                <a key={index} href={`/Detail/${item.id}`} className="col">
+                                    <div className="card h-100">
+                                        {item.anh && (
+                                            <img className="card-img-top" src={`data:image/jpeg;base64,${item.anh}`} />
+                                        )}
+
+                                        <div className="card-body text-start">
+                                            <div>
+                                                <h5 className="card-text">{item.tenbaibao}</h5>
+                                            </div>
+                                            <div className='d-flex justify-content-between'>
+                                                <p>
+                                                    <i>
+                                                        Tác giả: {item.tacgia}
+                                                        <br />
+                                                        {item.ngaydang}
+                                                    </i>
+                                                </p>
+                                                <p>
+                                                    <i class="bi bi-eye"></i> {item.luotxem}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            ))
+
+                        }
+
+                    </div>
+                    <div className='d-flex title-content'>
+                        <h3 className='ps-4 pe-3'><b>Giải trí</b></h3>  <hr className='w-50' style={{ height: '5px', color: 'red', opacity: '0.6' }}></hr>
+                    </div>
+                    <div className="row row-cols-1 row-cols-md-3 g-4 pb-3">
+                        {
+                            listGiaiTri.map((item, index) => (
+                                <a key={index} href={`/Detail/${item.id}`} className="col">
+                                    <div className="card h-100">
+                                        {item.anh && (
+                                            <img className="card-img-top" src={`data:image/jpeg;base64,${item.anh}`} />
+                                        )}
+
+                                        <div className="card-body text-start">
+                                            <div>
+                                                <h5 className="card-text">{item.tenbaibao}</h5>
+                                            </div>
+                                            <div className='d-flex justify-content-between'>
+                                                <p>
+                                                    <i>
+                                                        Tác giả: {item.tacgia}
+                                                        <br />
+                                                        {item.ngaydang}
+                                                    </i>
+                                                </p>
+                                                <p>
+                                                    <i class="bi bi-eye"></i> {item.luotxem}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            ))
+
+                        }
+
+                    </div>
+                    <div className='d-flex title-content'>
+                        <h3 className='ps-4 pe-3'><b>Thế giới</b></h3>  <hr className='w-50' style={{ height: '5px', color: 'red', opacity: '0.6' }}></hr>
+                    </div>
+                    <div className="row row-cols-1 row-cols-md-3 g-4 pb-3">
+                        {
+                            listTheGioi.map((item, index) => (
+                                <a key={index} href={`/Detail/${item.id}`} className="col">
+                                    <div className="card h-100">
+                                        {item.anh && (
+                                            <img className="card-img-top" src={`data:image/jpeg;base64,${item.anh}`} />
+                                        )}
+
+                                        <div className="card-body text-start">
+                                            <div>
+                                                <h5 className="card-text">{item.tenbaibao}</h5>
+                                            </div>
+                                            <div className='d-flex justify-content-between'>
+                                                <p>
+                                                    <i>
+                                                        Tác giả: {item.tacgia}
+                                                        <br />
+                                                        {item.ngaydang}
+                                                    </i>
+                                                </p>
+                                                <p>
+                                                    <i class="bi bi-eye"></i> {item.luotxem}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            ))
+
+                        }
+
+                    </div>
                 </div>
+                {loading === true && (
+                    <div className="loaderbox">
+                        <span className="loader"></span>
+                    </div>
+                )}
             </div>
-            {loading === true && (
-                <div className="loaderbox">
-                    <span className="loader"></span>
-                </div>
-            )}
         </div>
     );
 }

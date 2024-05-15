@@ -13,6 +13,9 @@ import Thembaomoi from '../components/Thembaomoi';
 import Listuser from '../components/Listuser';
 import DetailBao from '../components/DetailBao';
 import UpdateBao from '../components/UpdateBao';
+import ListBaoAuthor from '../components/ListBaoAuthor';
+import Thembaoauthor from '../components/Thembaoauthor';
+import ResetPass from '../components/ResetPass';
 
 const publicRoutes = [
     {path:'/' , element: Content},
@@ -23,13 +26,16 @@ const publicRoutes = [
     {path:'/Thegioi' , element: Thegioi},
     {path:'/Detail/:id' , element: DetailBao},
     {path:'/dangnhap' , element: Login, layout : null},
-    {path:'/dangky' , element: Dangki, layout : null}
+    {path:'/dangky' , element: Dangki, layout : null},
+    {path:'/resetpass' , element: ResetPass , layout : null}
 ]
 
 const publicRoutesDash = [
     {path:'/listbao' , element: ListBao},
     {path:'/themmoi' , element: Thembaomoi},
     {path:'/listuser' , element: Listuser},
+    {path:'/listauthor' , element: ListBaoAuthor},
+    {path:'/themmoiauthor', element: Thembaoauthor},
     {path:'/update/:id' , element: UpdateBao}
 ]
 

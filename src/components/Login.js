@@ -1,10 +1,42 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../css/login.css'
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 function Login(props) {
     const [isShowPassword, setIsShowPassword] = useState(false)
-    // const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true)
+    const [user, setUser] = useState('')
+    const [password, setPassword] = useState('')
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false)
+        }, 2000)
+    }, [])
+
+    const handleLogin = async () => {
+        const res = await axios.post(`http://localhost:9191/loginUser?taikhoan=${user}&matkhau=${password}`)
+        if (res.data === '') {
+            toast.error("Tài khoản hoặc mật khẩu không chính xác")
+        }
+        else {
+            const role = res.data.role
+            const taikhoan = res.data.taikhoan
+            const userID = res.data.id
+
+            localStorage.setItem("role", JSON.stringify(role))
+            localStorage.setItem("taikhoan", taikhoan)
+            localStorage.setItem("userID", userID)
+            navigate("/")
+            toast.success("Đăng nhập thành công")
+        }
+
+    }
+
     return (
         <div className='body-wrapper'>
             <div class="wrapper">
@@ -20,7 +52,7 @@ function Login(props) {
                                 <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                             </svg>
                         </span>
-                        <input type="text" name="userName" id="userName" placeholder="Tài khoản" />
+                        <input type="text" name="userName" id="userName" placeholder="Tài khoản" onChange={(e) => setUser(e.target.value)} />
                     </div>
                     <div class="form-field d-flex align-items-center">
                         <span class="fas fa-key">
@@ -29,7 +61,7 @@ function Login(props) {
                                 <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
                             </svg>
                         </span>
-                        <input type={isShowPassword === true ? "text" : "password"} name="password" id="pwd" placeholder="Mật khẩu" />
+                        <input type={isShowPassword === true ? "text" : "password"} name="password" id="pwd" placeholder="Mật khẩu" onChange={(e) => setPassword(e.target.value)} />
                         <div onClick={() => setIsShowPassword(!isShowPassword)}>
                             {
                                 isShowPassword === false ? <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
@@ -45,18 +77,20 @@ function Login(props) {
                     </div>
                 </form>
                 <div className='text-end text-white repass'>
-                    <i>Quên mật khẩu?</i>
+                    <a href='/resetpass' className='text-white'>
+                        <i>Quên mật khẩu?</i>
+                    </a>
                 </div>
-                <button class="btn m-3" >Đăng nhập</button>
-                <p className='text-white'>
+                <button class="btn mt-3 mb-3" onClick={() => handleLogin()} >Đăng nhập</button>
+                <p className='text-white text-center'>
                     <em>Bạn chưa có tài khoản?</em><Link to={'/dangky'} className='text-white fs-6'><b> Đăng ký</b></Link>
                 </p>
             </div>
-            {/* {loading === false && (
+            {loading === true && (
                 <div className="loaderbox">
                     <span className="loader"></span>
                 </div>
-            )} */}
+            )}
         </div>
     );
 }

@@ -43,11 +43,15 @@
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-    height: 150px;
 }
 
 .title-content{
     
+}
+
+.row {
+    margin-right: 0; 
+    margin-left: 0; 
 }
 
 
@@ -56,4 +60,6 @@
         height: auto;
     }
 }
+
+
    

@@ -5,8 +5,9 @@
   }
   
   .logo_footer {
-    height: 50px;
+    height: 100px;
     text-align: start;
+
   }
   
   .logo_footer img {
@@ -30,18 +31,14 @@
     margin-top: 10px;
     display: flex;
     justify-content: space-between;
+    background-color: #5fa9b3;
   }
   
   .map iframe {
     border-radius: 10px;
     overflow: hidden;
-    width: 80%;
+    width: 100%;
     height: 80%;
-    padding-right: 20px;
-  }
-  
-  .lienhe {
-    padding-left: 30px;
   }
 
   .Copyright {

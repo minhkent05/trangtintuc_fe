@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import 'bootstrap/js/dist/dropdown'
 import 'bootstrap/js/dist/collapse'
 import 'bootstrap/js/dist/offcanvas'
@@ -22,19 +22,47 @@ function Sidebar(props) {
                         </a>
                         <ul className="collapse nav flex-column ms-1 text-start" id="submenu3" data-bs-parent="#menu">
                             <li className="w-100">
-                                <a href="/listbao" className="nav-link px-0"> <span className=" d-sm-inline">Danh sách</span></a>
+                                {JSON.parse(localStorage.getItem("role")) === null ? '' : JSON.parse(localStorage.getItem("role")).map((item) => {
+                                    if (item.namerole === 'admin') {
+                                        return  <a href="/listbao" className="nav-link px-0"> <span className=" d-sm-inline">Danh sách</span></a>
+                                    }
+                                    if (item.namerole === 'author') {
+                                        return  <a href="/listauthor" className="nav-link px-0"> <span className=" d-sm-inline">Danh sách</span></a>
+                                    }
+                                    return Fragment
+                                }
+                                )
+                                }
                             </li>
                             <li>
-                                <a href="/themmoi" className="nav-link px-0"> <span className="d-sm-inline">Thêm mới</span></a>
+                            {JSON.parse(localStorage.getItem("role")) === null ? '' : JSON.parse(localStorage.getItem("role")).map((item) => {
+                                    if (item.namerole === 'admin') {
+                                        return  <a href="/themmoi" className="nav-link px-0"> <span className="d-sm-inline">Thêm mới</span></a>
+                                    }
+                                    if (item.namerole === 'author') {
+                                        return  <a href="/themmoiauthor" className="nav-link px-0"> <span className="d-sm-inline">Thêm mới</span></a>
+                                    }
+                                    return Fragment
+                                }
+                                )
+                                }
+                                
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="/listuser" className="nav-link px-0 align-middle">
-                            <i className="fs-4 bi-people"></i>
-                            <span className="ms-1 d-none d-sm-inline">Người dùng</span>
-                        </a>
-                    </li>
+                    {JSON.parse(localStorage.getItem("role")) === null ? '' : JSON.parse(localStorage.getItem("role")).map((item) => {
+                        if (item.namerole === 'admin') {
+                            return <li>
+                                <a href="/listuser" className="nav-link px-0 align-middle">
+                                    <i className="fs-4 bi-people"></i>
+                                    <span className="ms-1 d-none d-sm-inline">Người dùng</span>
+                                </a>
+                            </li>
+                        }
+                        return Fragment
+                    }
+                    )
+                    }
                 </ul>
                 <hr />
             </div>

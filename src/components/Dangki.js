@@ -1,10 +1,36 @@
 import React from 'react';
 import '../css/login.css'
 import { useState } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 function Dangki(props) {
     const [isShowPassword, setIsShowPassword] = useState(false)
     // const [loading, setLoading] = useState(true)
+    const [username,setUserName] = useState('')
+    const [password,setPassWord] = useState('')
+    const [email,setEmail] = useState('')
+    const navigate = useNavigate()
+
+    const user = {
+        taikhoan:username,
+        matkhau:password,
+        email:email,
+    }
+     const handleSignup = async()=>{
+        const res = await axios.post("http://localhost:9191/signup",user)
+        if(res.data ==='Email đã được sử dụng' ){
+            toast.warning(res.data)
+        }else if (res.data ==='Người dùng đã tồn tại!'){
+            toast.warning(res.data)
+        }
+        else {
+            toast.success('Đăng ký thành công')
+            navigate('/dangnhap')
+        }
+     }
+
     return (
         <div className='body-wrapper'>
             <div class="wrapper">
@@ -19,7 +45,7 @@ function Dangki(props) {
                                 <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z" />
                             </svg>
                         </span>
-                        <input type="text" name="email" id="email" placeholder="Email" />
+                        <input type="text" name="email" id="email" placeholder="Email" onChange={(e)=>setEmail(e.target.value)} />
                     </div>
                     <div class="form-field d-flex align-items-center">
                         <span class="far fa-user">
@@ -28,7 +54,7 @@ function Dangki(props) {
                                 <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                             </svg>
                         </span>
-                        <input type="text" name="userName" id="userName" placeholder="Tài khoản" />
+                        <input type="text" name="userName" id="userName" placeholder="Tài khoản" onChange={(e)=>setUserName(e.target.value)}/>
                     </div>
                     <div class="form-field d-flex align-items-center">
                         <span class="fas fa-key">
@@ -37,7 +63,7 @@ function Dangki(props) {
                                 <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
                             </svg>
                         </span>
-                        <input type={isShowPassword === true ? "text" : "password"} name="password" id="pwd" placeholder="Mật khẩu" />
+                        <input type={isShowPassword === true ? "text" : "password"} name="password" id="pwd" placeholder="Mật khẩu" onChange={(e)=>setPassWord(e.target.value)}/>
                         <div onClick={() => setIsShowPassword(!isShowPassword)}>
                             {
                                 isShowPassword === false ? <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
@@ -55,7 +81,7 @@ function Dangki(props) {
                 {/* <div className='text-end text-white repass'>
                     <i>Quên mật khẩu?</i>
                 </div> */}
-                <button class="btn mt-3" >Đăng ký tài khoản</button>
+                <button class="btn mt-3 mb-3" onClick={()=>handleSignup()} >Đăng ký tài khoản</button>
             </div>
             {/* {loading === false && (
                 <div className="loaderbox">

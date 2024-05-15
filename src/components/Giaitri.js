@@ -1,55 +1,61 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
+import axios from 'axios';
 
 function Giaitri(props) {
+    const [loading, setLoading] = useState(true)
+    const [listBao, setListBao] = useState([])
+
+    useEffect(()=>{
+        loadData()
+        setTimeout(() => {
+            setLoading(false)
+        }, 2000)
+    },[])
+
+    const loadData = async () => {
+        const res = await axios.get("http://localhost:9191/listTheLoai?theloai=giai tri")
+        setListBao(res.data)
+    }
     return (
-        <div>
-            <div className="row row-cols-1 row-cols-md-3 g-4 p-4 mt-4">
-                <div className="col">
-                    <div className="card h-100">
-                        <img src="https://image.tienphong.vn/w645/Uploaded/2024/vvh-ricbubvibu/2024_04_19/iland-2-5345.jpg" className="card-img-top" alt="..." />
-                        <div className="card-body text-start">
-                            <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <i>Ngày đăng:</i>
-                        </div>
-                    </div>
+        <div className="container pageDetail">
+                <div className="row row-cols-1 row-cols-md-3 g-4 pb-3">
+                    {
+                        listBao.map((item, index) => (
+                            <a key={index} href={`/Detail/${item.id}`} className="col">
+                                <div className="card h-100">
+                                    {item.anh && (
+                                        <img className="card-img-top" src={`data:image/jpeg;base64,${item.anh}`} />
+                                    )}
+
+                                    <div className="card-body text-start">
+                                        <div>
+                                            <h5 className="card-text">{item.tenbaibao}</h5>
+                                        </div>
+                                        <div className='d-flex justify-content-between'>
+                                            <p>
+                                                <i>
+                                                    Tác giả: {item.tacgia}
+                                                    <br />
+                                                    {item.ngaydang}
+                                                </i>
+                                            </p>
+                                            <p>
+                                                <i class="bi bi-eye"></i> {item.luotxem}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        ))
+
+                    }
+
                 </div>
-                <div className="col">
-                    <div className="card h-100">
-                        <img src="https://image.tienphong.vn/w645/Uploaded/2024/vvh-ricbubvibu/2024_04_19/iland-2-5345.jpg" className="card-img-top" alt="..." />
-                        <div className="card-body text-start">
-                            <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <i>Ngày đăng:</i>
-                        </div>
-                    </div>
+                {loading === true && (
+                <div className="loaderbox">
+                    <span className="loader"></span>
                 </div>
-                <div className="col">
-                    <div className="card h-100">
-                        <img src="https://image.tienphong.vn/w645/Uploaded/2024/vvh-ricbubvibu/2024_04_19/iland-2-5345.jpg" className="card-img-top" alt="..." />
-                        <div className="card-body text-start">
-                            <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <i>Ngày đăng:</i>
-                        </div>
-                    </div>
-                </div>
-                <div className="col">
-                    <div className="card h-100">
-                        <img src="https://image.tienphong.vn/w645/Uploaded/2024/vvh-ricbubvibu/2024_04_19/iland-2-5345.jpg" className="card-img-top" alt="..." />
-                        <div className="card-body text-start">
-                            <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <i>Ngày đăng:</i>
-                        </div>
-                    </div>
-                </div>
-                <div className="col">
-                    <div className="card h-100">
-                        <img src="https://image.tienphong.vn/w645/Uploaded/2024/vvh-ricbubvibu/2024_04_19/iland-2-5345.jpg" className="card-img-top" alt="..." />
-                        <div className="card-body text-start">
-                            <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <i>Ngày đăng:</i>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            )}
         </div>
     );
 }

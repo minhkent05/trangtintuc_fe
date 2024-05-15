@@ -4,8 +4,7 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-
-function Thembaomoi(props) {
+function Thembaoauthor(props) {
     const [currentDateTime, setCurrentDateTime] = useState(new Date());
     const [tenbaibao, setTenbaibao] = useState('')
     const [anh, setAnh] = useState(null)
@@ -114,4 +113,4 @@ function Thembaomoi(props) {
     );
 }
 
-export default Thembaomoi;
+export default Thembaoauthor;
